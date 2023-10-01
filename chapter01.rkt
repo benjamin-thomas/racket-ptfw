@@ -81,3 +81,54 @@
 	      #f)
 (check-equal? (member '(4 5) '(1 2 3 (4 5) 6))
 	      '((4 5) 6))
+
+
+; Defining variables
+; ==================
+
+; We bind the value `123` to the identifier `a`.
+(define a 123)
+(check-equal? a 123)
+
+
+; We can bind in parallel
+(define-values (x y z)
+  (values 1 2 3))
+(check-equal? (list x y z) '(1 2 3))
+
+; We can `assign` a new value (mutate) to an existing identfier with `set!`
+(set! a 124)
+(check-equal? a 124)
+
+; Identifiers can contain characters that would be rejected in other languages:
+(define 3x2 6)
+(define 3*2 6)
+(define 3×2 6)
+(define 3-hellos "Hello, hello, hello!")
+(check-equal? (list 6 6 6 "Hello, hello, hello!")
+	      (list 3x2 3*2 3×2 3-hellos))
+
+; Optional arguments may be specified with a keyword syntax: `#:key val`
+; `~r` converts a rational number to its string representation
+(check-equal? (~r pi)
+	      "3.141593")
+(check-equal? (~r pi #:precision 2)
+	      "3.14")
+
+
+(define lsa '(1 2 3))
+(define lsb '(1 2 3))
+(define lsa2 lsa)
+; Equality, by value
+(check-true (equal? lsa lsb))
+
+; Equality, by reference (for non-primitives)
+(check-false (eq? lsa lsb))
+(check-true (eq? lsa lsa2))
+
+; See this behaviour for primitives --> it's unclear if this behaviour is only related to numbers
+(define a2 124)
+(check-true (eq? a a2))
+
+; For numbers, we can use `=`
+(check-true (= a 124))
