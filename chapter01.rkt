@@ -132,3 +132,30 @@
 
 ; For numbers, we can use `=`
 (check-true (= a 124))
+
+
+; Strings
+; =======
+
+
+; A single character may be represented with #\ followed by a litteral char. Note that this represent a Unicode value
+(check-true (equal? #\a #\u0061))
+(check-true (equal? #\a #\u61))
+(check-equal? (char->integer #\a) 97)
+(check-equal? (integer->char 97) #\a)
+(check-true (char-alphabetic? #\a))
+(check-false (char-alphabetic? #\0))
+(check-true (char-numeric? #\0))
+(check-false (char-numeric? #\a))
+
+(check-equal? '(#\u2665 #\u2666 #\u2660 #\u2663) '(#\♥ #\♦ #\♠ #\♣))
+(check-equal? "Happy #\u263a" "Happy #☺")
+
+; Join strings with `string-append`
+(check-equal? (string-append "Luke, " "I am " "your father!") "Luke, I am your father!")
+
+; Index into strings with `string-ref`
+(check-equal? (string-ref "abc" 0) #\a)
+(check-equal? (string-ref "abc" 1) #\b)
+(check-equal? (string-ref "abc" 2) #\c)
+
