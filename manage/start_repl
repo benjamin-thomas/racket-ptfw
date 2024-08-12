@@ -1,0 +1,12 @@
+#!/bin/bash
+
+function die() {
+    echo "$1"
+    exit 1
+}
+
+FILE="$1"
+
+[ -z $FILE ] && die "Must give file name"
+
+bash -c "while true;do clear && racket --repl --eval '(enter! \"$FILE\")';sleep 0.2;done"

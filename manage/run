@@ -1,0 +1,12 @@
+#!/bin/bash
+
+function die() {
+    echo "$1"
+    exit 1
+}
+
+FILE="$1"
+
+[ -z $FILE ] && die "Must give file name"
+
+echo "$FILE" | entr -c bash -c "racket "$FILE" && echo -n 'OK: ' && date -Iseconds"
